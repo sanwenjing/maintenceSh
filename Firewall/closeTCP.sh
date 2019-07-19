@@ -1,4 +1,4 @@
 echo "enter the TCP port: "
 read port
-firewall-cmd --add-port=$port/tcp --permanent
+firewall-cmd --remove-port=$port/tcp --permanent
 firewall-cmd --reload

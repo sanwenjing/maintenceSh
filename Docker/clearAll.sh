@@ -2,7 +2,7 @@ docker images
 echo "Remove all images?(y/n)"
 read key
 if [ $key = 'y' ]; then
-docker images|awk '{print $1}'|xargs docker rmi -f
+docker images|awk '{print $3}'|xargs docker rmi -f
 fi
 
 docker ps -a

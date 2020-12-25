@@ -1,26 +1,53 @@
-Docker±¾µØË½ÓĞ²Ö¿â:
-1.°²×°(·şÎñÆ÷,Èç192.168.92.134)
-¹Ø±Õselinux
-sestatus -v ²é¿´×´Ì¬
-ĞŞ¸Ä/etc/selinux/configÎÄ¼ş¡£½«SELINUX=enforcing¸ÄÎªSELINUX=disable£¬²¢ÖØÆôÏµÍ³.
+ï»¿Dockeræœ¬åœ°ç§æœ‰ä»“åº“:
+1.å®‰è£…(æœåŠ¡å™¨,å¦‚192.168.92.134)
+å…³é—­selinux
+sestatus -v æŸ¥çœ‹çŠ¶æ€
+ä¿®æ”¹/etc/selinux/configæ–‡ä»¶ã€‚å°†SELINUX=enforcingæ”¹ä¸ºSELINUX=disableï¼Œå¹¶é‡å¯ç³»ç»Ÿ.
 
-ÏÂÔØ²¢Æô¶¯Ò»¸öregistryÈİÆ÷£¬-vÖ¸¶¨¾µÏñÎÄ¼ş±¾µØ´æ·ÅÂ·¾¶
+ä¸‹è½½å¹¶å¯åŠ¨ä¸€ä¸ªregistryå®¹å™¨ï¼Œ-væŒ‡å®šé•œåƒæ–‡ä»¶æœ¬åœ°å­˜æ”¾è·¯å¾„
 
 docker run --restart=always -d -p 5000:5000 -v /opt/data/registry:/var/lib/registry --name private_registry registry
 
-2.ÉÏ´«¾µÏñ(¿Í»§»ú)
-Ê¹ÓÃdocker tagÃüÁî½«¾µÏñ±ê¼ÇÎª192.168.92.134:5000/test
+2.ä¸Šä¼ é•œåƒ(å®¢æˆ·æœº)
+ä½¿ç”¨docker tagå‘½ä»¤å°†é•œåƒæ ‡è®°ä¸º192.168.92.134:5000/test
 
 docker tag ubuntu:18.04 192.168.92.134/test
-ÍÆËÍµ½±¾µØ²Ö¿â
+æ¨é€åˆ°æœ¬åœ°ä»“åº“
 
 docker push 192.168.92.134:5000/test
 
-×¢:Èç¹ûÉÏ´«Ê§°Ü
+æ³¨:å¦‚æœä¸Šä¼ å¤±è´¥
 vim /usr/lib/systemd/system/docker.service
-ÔÚ--insecure-registry 127.0.0.1:5000´¦¸´ÖÆÌí¼ÓÒ»ĞĞÈçÏÂÄÚÈİ¼´¿É½â¾ö
+åœ¨--insecure-registry 127.0.0.1:5000å¤„å¤åˆ¶æ·»åŠ ä¸€è¡Œå¦‚ä¸‹å†…å®¹å³å¯è§£å†³
 
 --insecure-registry 192.168.92.134:5000
-3.²é¿´²Ö¿â
+3.æŸ¥çœ‹ä»“åº“
 http://192.168.92.134:5000/v2/_catalog
+
+
+
+#æŸ¥çœ‹ä»“åº“é•œåƒ
+curl hub.test.com:5000/v2/_catalog
+#++++++++++++++++++++++++++++++
+#registryå¼€å¯åˆ é™¤
+#æŸ¥çœ‹é»˜è®¤é…ç½®
+docker exec -it  registry sh -c 'cat /etc/docker/registry/config.yml'
+#å¼€å¯åˆ é™¤(æ·»åŠ   delete: enabled: true)
+docker exec -it  registry sh -c "sed -i '/storage:/a\  delete:' /etc/docker/registry/config.yml"
+docker exec -it  registry sh -c "sed -i '/delete:/a\    enabled: true' /etc/docker/registry/config.yml"
+#é‡å¯
+docker restart registry
+#æŸ¥è¯¢ã€åˆ é™¤é•œåƒ
+#æŸ¥è¯¢é•œåƒ
+curl  <ä»“åº“åœ°å€>/v2/_catalog
+
+#æŸ¥è¯¢é•œåƒtag(ç‰ˆæœ¬)
+curl  <ä»“åº“åœ°å€>/v2/<é•œåƒå>/tags/list
+
+#åˆ é™¤é•œåƒAPI
+curl -I -X DELETE "<ä»“åº“åœ°å€>/v2/<é•œåƒå>/manifests/<é•œåƒdigest_hash>"
+
+#è·å–é•œåƒdigest_hash
+curl  <ä»“åº“åœ°å€>/v2/<é•œåƒå>/manifests/<tag> \
+	--header "Accept: application/vnd.docker.distribution.manifest.v2+json"
 

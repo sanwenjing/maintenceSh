@@ -5,6 +5,7 @@ read key
 if [ $key = 'y' ]; then
 docker run --restart=always -d \
     --name showDoc \
+    -p 80:80 \
     repo.local.com/showdoc:latest
 fi
 echo "http://localhost/ Login and install after few seconds"

@@ -10,3 +10,6 @@ $encoding = "ISO-8859-15";
 }
 $fileContents = iconv($encoding, "UTF-8", $fileContents);
 $output->setOutput($fileContents);
+
+无法删除文件,在主机中加入crontab任务
+*/5 * * * * docker exec -it nextcloud /usr/local/bin/php ./cron.php

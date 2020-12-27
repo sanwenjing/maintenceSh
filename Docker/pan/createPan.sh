@@ -25,7 +25,7 @@ docker run -dit --restart=always \
 --name=pan \
 -v $datapath:/var/www/html/system/data/default_home_folder  \
 -p 80:80 -p 6800:6800 \
-jaegerdocker/pan
+repo.local.com/pan
 fi
 echo "visit http://localhost/ Login with superuser/superuser after few minutes"
 echo "visit AriaNg:http://yourdomain.com:8081/dweb"

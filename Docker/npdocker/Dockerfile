@@ -2,8 +2,10 @@ FROM	repo.local.com/alpine:3.9.0
 #FROM	docker.io/gliderlabs/alpine
 MAINTAINER SANWENJING <sanwenjing@163.com>
 ENV TZ "Asia/Shanghai"
-EXPOSE 80 
-ADD repositories /etc/apk/repositories
+EXPOSE 80 9000
+#modify the repo for apk
+RUN sed -i "s/alpine.gliderlabs.com/mirrors.aliyun.com/g" /etc/apk/repositories
+
 RUN apk update && \
 apk add --no-cache php7 nginx \
 php7-mysqli \

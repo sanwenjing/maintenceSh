@@ -1,3 +1,0 @@
-nohup /usr/sbin/php-fpm7>/dev/null 2>&1
-nohup /usr/sbin/nginx>/dev/null 2>&1
-tail -f /etc/hosts

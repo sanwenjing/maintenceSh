@@ -7,7 +7,8 @@ docker run --restart=always -d \
     --name web \
     -p 80:80 \
     -v /html:/html \
-    sanwenjing/np:1.0
+    repo.local.com/np:1.1
+    #sanwenjing/np:1.0
 fi
 echo "Visit web http://localhost/ via webrower"
 

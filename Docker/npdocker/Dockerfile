@@ -22,12 +22,12 @@ php7-gd \
 php7-intl \
 php7-session \
 php7-fpm \
+tzdata \
 php7-memcached && \
 mkdir /run/nginx && \
 touch /run/nginx/nginx.pid && \
-apk add --no-cache openrc && \
-rc-update add php-fpm7 && \
-rc-update add nginx
+cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && \
+echo "Asia/Shanghai"> /etc/timezone
 RUN mkdir -p /run/openrc && \
 touch /run/openrc/softlevel
 #modify config for php

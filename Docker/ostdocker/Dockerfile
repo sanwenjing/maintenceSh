@@ -18,6 +18,7 @@ php7-curl \
 php7-iconv \
 php7-imap \
 php7-ldap \
+tzdata \
 php7-zlib \
 php7-gd \
 php7-intl \
@@ -25,7 +26,9 @@ php7-session \
 php7-fpm \
 php7-memcached && \
 mkdir /run/nginx && \
-touch /run/nginx/nginx.pid 
+touch /run/nginx/nginx.pid && \
+cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && \
+echo "Asia/Shanghai"> /etc/timezone 
 #modify config for php
 RUN sed -i "s/user = nobody/user = nginx/g" /etc/php7/php-fpm.d/www.conf && \
 sed -i "s/group = nobody/group = nginx/g" /etc/php7/php-fpm.d/www.conf

@@ -2,6 +2,7 @@ FROM	repo.local.com/alpine:3.9.0
 #FROM	docker.io/gliderlabs/alpine
 MAINTAINER SANWENJING <sanwenjing@163.com>
 ENV TZ "Asia/Shanghai"
+ENV frp /usr/program/frpproxy
 #EXPOSE 80 9000
 #modify the repo for apk
 RUN sed -i "s/alpine.gliderlabs.com/mirrors.aliyun.com/g" /etc/apk/repositories
@@ -12,26 +13,27 @@ cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && \
 echo "Asia/Shanghai"> /etc/timezone 
 
 #install php7 and nginx
-RUN apk add --no-cache php7 nginx php7-mysqli php7-pdo_mysql php7-fpm php7-gd php7-mbstring \
-php7-pear php7-xml php7-xmlrpc php7-phar php7-pecl-apcu php7-opcache php7-dom \
-php7-json php7-simplexml php7-curl php7-iconv php7-imap \
-php7-ldap php7-zlib php7-intl php7-session php7-memcached \
-&& \
-mkdir /run/nginx && \
-touch /run/nginx/nginx.pid
+#RUN apk add --no-cache php7 nginx php7-mysqli php7-pdo_mysql php7-fpm php7-gd php7-mbstring \
+#php7-pear php7-xml php7-xmlrpc php7-phar php7-pecl-apcu php7-opcache php7-dom \
+#php7-json php7-simplexml php7-curl php7-iconv php7-imap \
+#php7-ldap php7-zlib php7-intl php7-session php7-memcached \
+#&& \
+#mkdir /run/nginx && \
+#touch /run/nginx/nginx.pid
 
 
 #modify config for php
-RUN sed -i "s/user = nobody/user = nginx/g" /etc/php7/php-fpm.d/www.conf && \
-sed -i "s/group = nobody/group = nginx/g" /etc/php7/php-fpm.d/www.conf
+#RUN sed -i "s/user = nobody/user = nginx/g" /etc/php7/php-fpm.d/www.conf && \
+#sed -i "s/group = nobody/group = nginx/g" /etc/php7/php-fpm.d/www.conf
 #add config for nginx
-ADD default.conf /etc/nginx/conf.d/default.conf
+#ADD default.conf /etc/nginx/conf.d/default.conf
 
 ##ADD files
-RUN mkdir -p /html && \
-echo "<?php echo phpinfo(); ?>">/html/phpinfo.php
-COPY joomla /html/
-RUN chmod -R 777 /html
+RUN mkdir -p ${frp}
+#echo "<?php echo phpinfo(); ?>">/html/phpinfo.php
+ADD frp_0.37.0_linux_amd64.tar.gz frp_0.37.0_windows_amd64.zip ${frp}/
+COPY frp_* ${frp}/
+RUN chmod -R 777 ${frp}
 #modify config for osticket
 
 #RUN cp /html/include/ost-sampleconfig.php /html/include/ost-config.php && \
@@ -41,8 +43,8 @@ RUN chmod -R 777 /html
 
 RUN touch /np.start && \
 echo "#!/bin/sh">>/np.start && \
-echo "nohup /usr/sbin/php-fpm7>/dev/null 2>&1">>/np.start && \
-echo "nohup /usr/sbin/nginx>/dev/null 2>&1">>/np.start && \
+echo "nohup ${frp}/frpc -c ${frp}/frpc.ini>/dev/null 2>&1">>/np.start && \
+#echo "nohup /usr/sbin/nginx>/dev/null 2>&1">>/np.start && \
 echo "nohup /usr/sbin/crond>/dev/null 2>&1">>/np.start && \
 echo "tail -f /etc/hosts">>/np.start
 CMD /bin/sh /np.start

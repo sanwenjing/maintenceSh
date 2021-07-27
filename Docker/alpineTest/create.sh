@@ -9,4 +9,4 @@ docker run --restart=always -it -d \
     #sanwenjing/np:1.0
 fi
 echo "$sn built"
-
+docker exec -it $sn sed -i "s/alpine.gliderlabs.com/repo.local.com:8080/g" /etc/apk/repositories

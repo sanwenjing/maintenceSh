@@ -8,7 +8,7 @@ ENV frp /usr/program/frpproxy
 RUN sed -i "s/alpine.gliderlabs.com/mirrors.aliyun.com/g" /etc/apk/repositories
 
 RUN apk update && \
-apk add --no-cache tzdata python && \ 
+apk add --no-cache tzdata && \ 
 cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && \
 echo "Asia/Shanghai"> /etc/timezone 
 

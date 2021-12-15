@@ -5,5 +5,17 @@
 	"port":51826,
 	"pin":"031-45-154"
 	},
-	"description":"This is my homebridge"
+	"description":"This is my homebridge",
+        "accessories": [ 
+   {
+   	"accessory": "Http",
+   	"name": "myswitch",
+   	"switchHandling": "realtime",
+   	"http_method": "GET",
+   	"on_url":      "http://192.168.31.99/?action=OFF1",
+   	"off_url":     "http://192.168.31.99/?action=ON1",
+   	"status_url":  "http://192.168.31.99/?action=states&PIN=IO0",
+   	"service": "Switch"				    
+      } 
+   ]
 }

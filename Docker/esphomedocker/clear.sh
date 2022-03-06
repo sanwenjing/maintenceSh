@@ -1,6 +1,6 @@
 #!/bin/sh
 target=esphome
-ver=1.0
+ver=20220306
 images=repo.local.com/$target:$ver
 #images=esphome/esphome:latest
 

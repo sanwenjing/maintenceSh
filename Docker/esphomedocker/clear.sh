@@ -26,7 +26,7 @@ echo "Building a server for $sn?(y/n)"
 read key
 if [ $key = 'y' ]; then
 docker run --restart=always -d -it \
--p 6052:6052 \
+--net=host \
     --name $target \
 repo.local.com/$target:$ver
 #sanwenjing/np:1.0

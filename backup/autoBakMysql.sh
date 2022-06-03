@@ -6,4 +6,4 @@ cd $4
 tar -zcvf $5${dt}.sql.tar.gz ${dt}.sql
 rm -rf ${dt}.sql
 
-#find $4 -name *.gz -atime +7 -exec rm -rf {} \;
+find ./ -name '*.gz' -atime +7 -exec rm -rf {} \;

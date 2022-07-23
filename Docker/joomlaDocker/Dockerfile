@@ -2,9 +2,10 @@ FROM	repo.local.com/alpine:3.9.0
 #FROM	docker.io/gliderlabs/alpine
 MAINTAINER SANWENJING <sanwenjing@163.com>
 ENV TZ "Asia/Shanghai"
-#EXPOSE 80 9000
+EXPOSE 80 443 
 #modify the repo for apk
-RUN sed -i "s/alpine.gliderlabs.com/mirrors.aliyun.com/g" /etc/apk/repositories
+#RUN sed -i "s/alpine.gliderlabs.com/mirrors.aliyun.com/g" /etc/apk/repositories
+RUN sed -i "s/alpine.gliderlabs.com/repo.local.com:8080/g" /etc/apk/repositories
 
 RUN apk update && \
 apk add --no-cache tzdata && \ 
@@ -26,8 +27,10 @@ RUN sed -i "s/user = nobody/user = nginx/g" /etc/php7/php-fpm.d/www.conf && \
 sed -i "s/group = nobody/group = nginx/g" /etc/php7/php-fpm.d/www.conf
 #add config for nginx
 ADD default.conf /etc/nginx/conf.d/default.conf
+ADD ssl.conf /etc/nginx/conf.d/default.conf
 
 ##ADD files
+WORKDIR /html
 RUN mkdir -p /html && \
 echo "<?php echo phpinfo(); ?>">/html/phpinfo.php
 COPY joomla /html/
@@ -39,10 +42,12 @@ RUN chmod -R 777 /html
 ##add crontab
 #echo "*/1 * * * * /usr/bin/php /html/api/cron.php>/dev/null 2>&1">>/var/spool/cron/crontabs/root
 
+VOLUME /etc/nginx/cert
+
 RUN touch /np.start && \
 echo "#!/bin/sh">>/np.start && \
 echo "nohup /usr/sbin/php-fpm7>/dev/null 2>&1">>/np.start && \
 echo "nohup /usr/sbin/nginx>/dev/null 2>&1">>/np.start && \
 echo "nohup /usr/sbin/crond>/dev/null 2>&1">>/np.start && \
 echo "tail -f /etc/hosts">>/np.start
-CMD /bin/sh /np.start
+ENTRYPOINT ["/bin/sh","/np.start"]

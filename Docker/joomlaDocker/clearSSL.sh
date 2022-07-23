@@ -1,6 +1,6 @@
 #!/bin/sh
-target=joomla
-ver=20210725
+target=joomla_ssl
+ver=20220723
 images=repo.local.com/$target:$ver
 
 docker stop $target
@@ -21,6 +21,7 @@ docker run --restart=always -d \
     --name $target \
     -p 80:80 \
     -p 443:443 \
+    -v /home/web/cert:/etc/nginx/cert \
 repo.local.com/$target:$ver    
 #sanwenjing/np:1.0
 fi

@@ -3,16 +3,20 @@ target=joomla_ssl
 ver=20220723
 images=repo.local.com/$target:$ver
 
+echo "Remove all for $images(y/n)"
+read key
+if [ $key = 'y' ]; then
 docker stop $target
 docker rm $target
 docker rmi $images
+fi
+
+
 echo "Rebuild for $images(y/n)"
 read key
 if [ $key = 'y' ]; then
 docker build -t $images .
 docker images
-
-
 fi
 echo "Building a server for $target?(y/n)"
 read key

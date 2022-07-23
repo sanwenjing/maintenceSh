@@ -27,7 +27,7 @@ RUN sed -i "s/user = nobody/user = nginx/g" /etc/php7/php-fpm.d/www.conf && \
 sed -i "s/group = nobody/group = nginx/g" /etc/php7/php-fpm.d/www.conf
 #add config for nginx
 ADD default.conf /etc/nginx/conf.d/default.conf
-ADD ssl.conf /etc/nginx/conf.d/default.conf
+ADD ssl.conf /etc/nginx/conf.d/ssl.conf
 
 ##ADD files
 VOLUME ["/etc/nginx/cert","/html"]

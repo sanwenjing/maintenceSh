@@ -34,7 +34,7 @@ WORKDIR /html
 RUN mkdir -p /html && \
 echo "<?php echo phpinfo(); ?>">/html/phpinfo.php
 COPY vtigercrm /html/
-RUN chmod -R 777 /html
+RUN chmod -R 777 /html && echo "*/5 * * * * php7 /html/vtigercron.php>/dev/null 2>&1" >> /etc/crontabs/root
 #modify config for osticket
 
 #RUN cp /html/include/ost-sampleconfig.php /html/include/ost-config.php && \

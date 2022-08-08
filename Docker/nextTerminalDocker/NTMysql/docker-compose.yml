@@ -1,0 +1,30 @@
+version: '3.3'
+services:
+  guacd:
+    #image: dushixiang/guacd:latest
+    image: sanwenjing/guacd:1.4.0
+    volumes:
+      - /home/data/nextter:/usr/local/next-terminal/data
+    restart:
+          always
+  next-terminal:
+    #image: dushixiang/next-terminal:latest
+    image: sanwenjing/next-terminal:1.2.7
+    environment:
+      DB: mysql
+      # 请修改下面的 MySql 配置，需自行创建数据库和用户
+      MYSQL_HOSTNAME: mysql
+      MYSQL_PORT: 3306
+      MYSQL_USERNAME: next-terminal
+      MYSQL_PASSWORD: next-terminal
+      MYSQL_DATABASE: next-terminal
+      # 请修改上面的 MySql 配置，需自行创建数据库和用户
+      GUACD_HOSTNAME: guacd
+      GUACD_PORT: 4822
+    ports:
+      - "8088:8088"
+    volumes:
+      - /etc/localtime:/etc/localtime
+      - /home/data/nextter:/usr/local/next-terminal/data
+    restart:
+      always

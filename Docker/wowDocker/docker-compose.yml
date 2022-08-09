@@ -1,0 +1,25 @@
+version: '3.3'
+services:
+  
+  mysql8:
+    image: mysql:8.0
+    container_name: mysql8
+    environment:
+      MYSQL_ROOT_PASSWORD: 123456
+    ports:
+      - "3306:3306"
+    restart:
+      always
+    
+
+  tbc-serv:
+    image: repo.local.com/wow-tbc:1.0
+    volumes:
+      - /home/data/vmap:/usr/program/vmap
+    ports:
+      - "3724:3724"
+      - "8085:8085"
+    restart:
+      always
+    links:
+      - "mysql8:mysql"

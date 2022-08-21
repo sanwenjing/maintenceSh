@@ -26,7 +26,7 @@ read key
 if [ $key = 'y' ]; then
 
 docker run --restart=always -d \
-    --name web \
+    --name $target \
     -p 80:80 \
     -v /html:/html \
 $images

@@ -1,0 +1,10 @@
+version: '3.3'
+services:
+  discuz:
+    image: sanwenjing/discuz:3.4
+    volumes:
+      - /home/data/vmap:/usr/program/vmap
+    ports:
+      - "80:80"
+    restart:
+      always

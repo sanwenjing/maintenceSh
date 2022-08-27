@@ -2,14 +2,18 @@ FROM	repo.local.com/alpine:3.9.0
 #FROM	docker.io/gliderlabs/alpine
 MAINTAINER SANWENJING <sanwenjing@163.com>
 ENV TZ "Asia/Shanghai"
-EXPOSE 80 9000
+EXPOSE 80 443
 #modify the repo for apk
-RUN sed -i "s/alpine.gliderlabs.com/mirrors.aliyun.com/g" /etc/apk/repositories
+#RUN sed -i "s/alpine.gliderlabs.com/mirrors.aliyun.com/g" /etc/apk/repositories
+RUN sed -i "s/alpine.gliderlabs.com/repo.local.com:8080/g" /etc/apk/repositories
+
+WORKDIR /html
+
 
 RUN apk update && \
 apk add --no-cache php7 nginx \
 php7-pear php7-xml php7-xmlrpc php7-phar php7-pecl-apcu php7-opcache php7-dom \
-php7-mysqli php7-pdo_mysql php7-mbstring php7-json php7-simplexml \
+php7-ctype php7-mysqli php7-pdo_mysql php7-mbstring php7-json php7-simplexml \
 php7-curl \
 php7-iconv \
 php7-imap \
@@ -44,4 +48,4 @@ echo "nohup /usr/sbin/nginx>/dev/null 2>&1">>/np.start && \
 echo "tail -f /etc/hosts">>/np.start
 #ADD start.sh /root/
 #RUN chmod +x /root/start.sh
-CMD /bin/sh /np.start
+ENTRYPOINT ["/bin/sh","/np.start"]

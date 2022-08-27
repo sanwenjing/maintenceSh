@@ -1,0 +1,27 @@
+version: '3.3'
+
+services:
+  db-piwigo:
+    #image: sanwenjing/apline-mariadb:10.4.15
+    image: repo.local.com/apline-mariadb:10.4.15
+    container_name: db-piwigo
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: 123456
+      MYSQL_DATABASE: piwigo
+      MYSQL_USER: piwigo
+      MYSQL_PASSWORD: 123456
+    volumes:
+      - /home/data/db-piwigo:/var/lib/mysql
+
+  piwigo:
+    #image: sanwenjing/discuz:3.4
+    image: repo.local.com/photo:1.0
+    container_name: photos
+    restart: always
+    volumes:
+      - /home/data/photos:/html/upload
+    ports:
+      - "8080:80"
+
+

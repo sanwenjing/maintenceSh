@@ -1,0 +1,17 @@
+version: '3.3'
+services:
+  survey:
+    image: registry.cn-hangzhou.aliyuncs.com/surveyking/surveyking
+    image: repo.local.com/surveyking:20220828
+    container_name: surveyking
+    ports:
+      - "1991:1991"
+    restart:
+      always
+#    volumes:
+#      - /home/data/surveyking:/surveyking
+
+
+
+
+#login with admin/123456

@@ -1,0 +1,16 @@
+version: '3.3'
+services:
+  mindoc:
+    container_name: mindoc
+    image: registry.cn-hangzhou.aliyuncs.com/mindoc-org/mindoc:v2.1
+    restart: always
+    environment:
+      - MINDOC_ENABLE_EXPORT=true
+    ports:
+      - "8181:8181"
+    volumes:
+      - /home/data/mindoc:/mindoc/conf
+
+
+
+#login with admin/123456

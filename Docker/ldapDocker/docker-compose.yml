@@ -1,0 +1,33 @@
+version: '3.3'
+
+services:
+  ldap:
+    #image: sanwenjing/openldap
+    image: repo.local.com/openldap
+    container_name: serv-ldap
+    restart: always
+    environment:
+      - LDAP_TLS=false 
+      - LDAP_ORGANISATION=local 
+      - LDAP_DOMAIN=local.com
+      - LDAP_ADMIN_PASSWORD=123456 
+      - LDAP_CONFIG_PASSWORD=123456      
+    ports:
+      - "389:389"
+      - "636:636"
+    volumes:
+      - /home/data/ldap:/var/lib/ldap
+      - /home/data/slapd.d:/etc/ldap/slapd.d
+
+  phpldapadmin:
+    #image: sanwenjing/phpldapadmin:1.2.5
+    image: repo.local.com/phpldapadmin:1.2.5
+    container_name: ldap_mgr
+    restart: always
+    environment:
+      - PHPLDAPADMIN_HTTPS=false
+      - PHPLDAPADMIN_LDAP_HOSTS=serv-ldap
+    ports:
+      - "19999:80"
+
+

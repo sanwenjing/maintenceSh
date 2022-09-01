@@ -1,0 +1,35 @@
+version: "3.3"
+
+services:
+  ldap-pass:
+    container_name: ldap-pass
+    #image: sanwenjing/self-service-password:20220901
+    image: repo.local.com/self-service-password:20220901
+    restart: always
+    container_name: ldap-pass
+    ports:
+      - 8389:80
+    environment:
+      - LDAP_SERVER=ldap://192.168.31.150:389
+      - LDAP_BINDDN=cn=admin,dc=local,dc=com
+      - LDAP_BINDPASS=123456
+      - LDAP_BASE_SEARCH=dc=local,dc=com
+      - MAIL_FROM=xxx@xxx.com
+      - SMTP_DEBUG=0
+      - SMTP_HOST=smtp.qiye.aliyun.com
+      - SMTP_USER=xxx@xxx.com
+      - SMTP_PASS=youpass
+      - SMTP_PORT=465
+      - SMTP_SECURE_TYPE=ssl
+      - SMTP_AUTH_ON=true
+      - NOTIFY_ON_CHANGE=true
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+#      - /home/data/selfpass:/www/ssp
+#      - /home/data/selfpass/logs:/www/logs
+    deploy:
+      resources:
+        limits:
+           memory: 2G
+        reservations:
+           memory: 512M

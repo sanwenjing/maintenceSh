@@ -6,6 +6,7 @@ services:
     #image: sanwenjing/portainer:2.0.1
     image: sanwenjing/portainer:2.0.1
     restart: always
+    network_mode: bridge
     ports:
       - 9999:9000
     volumes:

@@ -1,0 +1,11 @@
+version: "3.3"
+
+services:
+  serv-itop:
+    container_name: serv-itop
+    #image: vbkunin/itop:2.7.0-beta
+    image: sanwenjing/itop:2.7.0-beta
+    restart: always
+    network_mode: bridge
+    ports:
+      - 8000:80

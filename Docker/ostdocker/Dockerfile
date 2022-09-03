@@ -10,7 +10,7 @@ RUN sed -i "s/alpine.gliderlabs.com/repo.local.com:8080/g" /etc/apk/repositories
 WORKDIR /html
 
 RUN apk update && \
-apk add --no-cache php7 nginx \
+apk add --no-cache php7 nginx tzdata \
 php7-mysqli \
 php7-pear php7-xml php7-xmlrpc php7-phar php7-pecl-apcu php7-opcache php7-dom \
 php7-pdo_mysql \

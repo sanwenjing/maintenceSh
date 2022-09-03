@@ -2,9 +2,12 @@ FROM	repo.local.com/alpine:3.9.0
 #FROM	docker.io/gliderlabs/alpine
 MAINTAINER SANWENJING <sanwenjing@163.com>
 ENV TZ "Asia/Shanghai"
-EXPOSE 80 9000
+EXPOSE 80 443 9000
 #modify the repo for apk
-RUN sed -i "s/alpine.gliderlabs.com/mirrors.aliyun.com/g" /etc/apk/repositories
+#RUN sed -i "s/alpine.gliderlabs.com/mirrors.aliyun.com/g" /etc/apk/repositories
+RUN sed -i "s/alpine.gliderlabs.com/repo.local.com:8080/g" /etc/apk/repositories
+
+WORKDIR /html
 
 RUN apk update && \
 apk add --no-cache php7 nginx \
@@ -18,7 +21,6 @@ php7-curl \
 php7-iconv \
 php7-imap \
 php7-ldap \
-tzdata \
 php7-zlib \
 php7-gd \
 php7-intl \
@@ -27,10 +29,7 @@ php7-fpm \
 php7-memcached && \
 mkdir /run/nginx && \
 touch /run/nginx/nginx.pid && \
-cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && \
-echo "Asia/Shanghai"> /etc/timezone 
-#modify config for php
-RUN sed -i "s/user = nobody/user = nginx/g" /etc/php7/php-fpm.d/www.conf && \
+sed -i "s/user = nobody/user = nginx/g" /etc/php7/php-fpm.d/www.conf && \
 sed -i "s/group = nobody/group = nginx/g" /etc/php7/php-fpm.d/www.conf
 #add config for nginx
 ADD default.conf /etc/nginx/conf.d/default.conf
@@ -52,4 +51,5 @@ echo "nohup /usr/sbin/crond>/dev/null 2>&1">>/np.start && \
 echo "tail -f /etc/hosts">>/np.start
 #ADD start.sh /root/
 #RUN chmod +x /root/start.sh
-CMD /bin/sh /np.start
+#CMD /bin/sh /np.start
+ENTRYPOINT ["/bin/sh","/np.start"]

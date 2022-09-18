@@ -1,0 +1,15 @@
+version: '3.3'
+
+services:
+  alist:
+    image: repo.local.com/alist:v2
+    container_name: serv-alist
+    restart: always
+    network_mode: bridge
+    ports:
+      - "5244:5244"
+    volumes:
+      - /home/data/alist:/opt/alist/data
+
+#docker logs serv-alist to get password
+

@@ -1,0 +1,14 @@
+version: '3.3'
+services:
+
+  alpine:
+    image: repo.local.com/alpine:3.9.0
+    network_mode: "host"
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+    ports:
+      - "8080:8080"
+    command:
+      - 'tail -f /etc/hosts'
+    restart:
+      always

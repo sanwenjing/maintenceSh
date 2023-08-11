@@ -1,0 +1,15 @@
+version: '3.3'
+services:
+  Postgresql:
+    image: postgres:14.2
+    container_name: pgsql
+    volumes:
+      - /home/data/postgresql:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_PASSWORD:'123456'
+    ports:
+      - 5432:5432 
+    restart:
+      always
+  
+

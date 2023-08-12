@@ -1,0 +1,17 @@
+version: '3.3'
+services:
+  qinglong:
+#    image: whyour/qinglong
+    image: repo.local.com/qinglong:2.10.13
+    container_name: qinglong
+    volumes:
+      - /home/data/qinglong:/ql/data
+#    environment:
+#      POSTGRES_USER: postgres
+#      POSTGRES_PASSWORD: 123456
+#    privileged: true
+    ports:
+      - 5700:5700
+    restart:
+      unless-stopped
+

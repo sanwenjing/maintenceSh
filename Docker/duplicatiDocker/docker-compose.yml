@@ -1,0 +1,20 @@
+version: '3.3'
+services:
+  duplicati:
+#    image: linuxserver/duplicati
+    image: repo.local.com/duplicati:2.0.6.3
+    container_name: duplicati
+    volumes:
+      - /home/data/duplicati/config:/config
+      - /home/data/duplicati/backups:/backups
+      - /home/data/duplicati/source:/source
+    environment:
+      PUID: 0
+      PGID: 0
+      TZ: Asia/Shanghai
+#    privileged: true
+    ports:
+      - 8200:8200
+    restart:
+      unless-stopped
+

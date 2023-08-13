@@ -1,0 +1,20 @@
+version: '3.3'
+services:
+  qinglong:
+    image: helloz/transmission
+#    image: repo.local.com/qinglong:2.10.13
+    container_name: transmission
+    volumes:
+      - /home/data/transmission/downloads:/root/Downloads
+      - /home/data/transmission/config:/root/.config/transmission-daemon
+    environment:
+      USERNAME: admin
+      PASSWORD: admin
+#    privileged: true
+    ports:
+      - 9091:9091
+      - 51413:51413
+      - 51413:51413/udp
+    restart:
+      unless-stopped
+

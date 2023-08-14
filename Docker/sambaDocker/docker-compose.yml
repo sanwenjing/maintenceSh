@@ -2,7 +2,8 @@ version: '3.3'
 
 services:
   samba:
-    image: dperson/samba
+#    image: dperson/samba
+    image: repo.local.com/samba:4.12.2
     container_name: serv-samba
     restart: always
     network_mode: bridge
@@ -10,11 +11,11 @@ services:
       - "139:139"
       - "445:445"
     environment:
-      USER: "sharedata;123456"
+      USER: "soft;123456"
       #<name;/path>[;browse;readonly;guest;users;admins;writelist;comment
       SHARE: "sharedata;/mount/;yes;no;yes;all;all;all"
     volumes:
-      - /home/data/samba:/mount
+      - /home/data/transmission/downloads:/mount
 
 
 

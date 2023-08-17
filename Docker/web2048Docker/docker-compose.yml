@@ -1,0 +1,10 @@
+version: '3.3'
+services:
+  serv1:
+    image: repo.local.com/web2048
+    container_name: web2048
+    ports:
+      - 80:80
+    restart:
+      unless-stopped
+

@@ -1,0 +1,18 @@
+version: '3.3'
+services:
+  serv1:
+#    image: registry.cn-hangzhou.aliyuncs.com/images-wu/talebook:latest
+    image: repo.local.com/talebook:3.6.4
+    container_name: talebook
+    volumes:
+      - /home/data/talebook:/data
+#    environment:
+#      POSTGRES_USER: postgres
+#      POSTGRES_PASSWORD: 123456
+#    privileged: true
+    ports:
+      - 80:80
+#      - 443:443
+    restart:
+      unless-stopped
+

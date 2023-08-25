@@ -11,6 +11,8 @@ if [ $key = 'y' ]; then
 yum -y install rpcbind
 systemctl start rpcbind
 systemctl enable rpcbind
+
+yum -y install nfs-utils.x86_64
 showmount -e $serv_nfs
 #Export list for 192.168.2.202
 #/data/share 192.168.2.202

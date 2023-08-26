@@ -33,6 +33,6 @@ docker run --restart=always -d \
 $images
 docker logs $target
 fi
-echo "Visit web http://localhost/ via webrower"
+echo "Visit web http(s)://localhost/ via webrower"
 
 

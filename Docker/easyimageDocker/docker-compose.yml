@@ -1,7 +1,8 @@
 version: '3.3'
 services:
   serv1:
-    image: ddsderek/easyimage:latest
+#    image: ddsderek/easyimage:latest
+    image: repo.local.com/easyimage:2.8.3
     container_name: easyimage
     ports:
       - '8080:80'

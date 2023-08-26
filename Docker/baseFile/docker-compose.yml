@@ -1,0 +1,36 @@
+version: '3.3'
+services:
+  serv1:
+#    image: nyanmisaka/jellyfin:latest
+    image: repo.local.com/jellyfin:10.8.10
+    container_name: jellyfin
+    volumes:
+      - /home/data/jellyfin/config:/config
+      - /home/data/jellyfin/cache:/cache
+      - /home/data/jellyfin/media:/media
+    environment:
+      TZ: Asia/Shanghai
+      PUID: 0
+      PGID: 0
+#    privileged: true
+    devices:
+#直通显卡给 Docker 容器，用于硬解
+      - /dev/dri:/dev/dri
+    extra_hosts:
+      "api.themoviedb.org": "13.224.161.90"
+      "api.themoviedb.org": "13.35.8.65"
+      "api.themoviedb.org": "13.35.8.93"
+      "api.themoviedb.org": "13.35.8.6"
+      "api.themoviedb.org": "13.35.8.54"
+      "image.tmdb.org": "138.199.37.230"
+      "image.tmdb.org": "108.138.246.49"
+      "api.thetvdb.org": "13.225.89.239"
+      "api.thetvdb.org": "192.241.234.54"
+    ports:
+      - 8096:8096
+      - 8920:8920
+      - 7359:7359/udp
+      - 1900:1900/udp
+    restart:
+      unless-stopped
+

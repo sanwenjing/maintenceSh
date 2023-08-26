@@ -1,0 +1,24 @@
+version: '3.3'
+services:
+  serv1:
+#    image: jlesage/nginx-proxy-manager
+    image: repo.local.com/nginx-proxy-manager:2.10.4
+    container_name: npm
+    volumes:
+      - /home/data/npm:/config:rw
+#    environment:
+#      TZ: Asia/Shanghai
+#    privileged: true
+#    devices:
+#直通显卡给 Docker 容器，用于硬解
+#      - /dev/dri:/dev/dri
+    ports:
+      - 8181:8181
+      - 80:8080
+      - 443:4443
+    restart:
+      unless-stopped
+
+
+
+#默认账号密码是 admin@example.com 密码是 changeme 登陆进去后修改邮箱和密码

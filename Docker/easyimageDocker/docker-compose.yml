@@ -10,9 +10,11 @@ services:
       - TZ=Asia/Shanghai
       - PUID=1000
       - PGID=1000
+#    privileged: true
     volumes:
       - '/home/data/easyimage/config:/app/web/config'
       - '/home/data/easyimage/i:/app/web/i'
     restart: unless-stopped
 
 
+#      'mkdir -p /run/php/ && touch /run/php/php7.4-fpm.pid' #如果报FPM initialization failed错,使用docker exec -it 容器名 bash 执行此命令

@@ -1,0 +1,13 @@
+version: '3.3'
+services:
+  serv1:
+#    image: jeessy/backup-x
+    image: repo.local.com/backup-x:2.4.2
+    container_name: backup-x
+    volumes:
+      - /home/data/nfs/backup-x:/app/backup-x-files
+    ports:
+      - 9977:9977
+    restart:
+      unless-stopped
+

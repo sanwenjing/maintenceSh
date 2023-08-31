@@ -5,10 +5,15 @@ services:
     image: repo.local.com/qinglong:2.10.13
     container_name: qinglong
     volumes:
-      - /home/data/qinglong:/ql/data
-#    environment:
-#      POSTGRES_USER: postgres
-#      POSTGRES_PASSWORD: 123456
+      - /home/data/qinglong/config:/ql/config
+      - /home/data/qinglong/log:/ql/log
+      - /home/data/qinglong/db:/ql/db
+      - /home/data/qinglong/scripts:/ql/scripts
+      - /home/data/qinglong/jbot:/ql/jbot
+      - /home/data/qinglong/repo:/ql/repo
+    environment:
+      ENABLE_HANGUP: 'true'
+      ENABLE_WEB_PANEL: 'true'
 #    privileged: true
     ports:
       - 5700:5700

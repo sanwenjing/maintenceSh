@@ -5,7 +5,7 @@ services:
     image: repo.local.com/qinglong:2.10.13
     container_name: qinglong
     volumes:
-      - /home/data/qinglong:/ql/data
+      - /home/data/qinglong:/ql
 #    environment:
 #      POSTGRES_USER: postgres
 #      POSTGRES_PASSWORD: 123456

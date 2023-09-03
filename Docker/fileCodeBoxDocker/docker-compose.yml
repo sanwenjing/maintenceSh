@@ -1,0 +1,15 @@
+version: '3.3'
+services:
+  serv1:
+#    image: lanol/filecodebox:beta
+    image: repo.local.com/filecodebox:2.0
+    container_name: filecodebox
+    volumes:
+      - /home/data/filecodebox/:/app/data
+#    privileged: true
+    ports:
+      - 12345:12345
+    restart:
+      unless-stopped
+
+#visit via http://youip:12345/#/admin by password FileCodeBox2023

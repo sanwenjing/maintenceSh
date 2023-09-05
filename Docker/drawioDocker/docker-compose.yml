@@ -1,0 +1,12 @@
+version: '3.3'
+services:
+  serv1:
+#    image: jgraph/drawio
+    image: repo.local.com/drawio:21.7.2
+    container_name: drawio
+    ports:
+      - 8080:8080
+      - 8443:8443
+    restart:
+      unless-stopped
+

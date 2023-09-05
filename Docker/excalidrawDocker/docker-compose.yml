@@ -1,0 +1,11 @@
+version: '3.3'
+services:
+  serv1:
+#    image: excalidraw/excalidraw
+    image: repo.local.com/excalidraw:20230905
+    container_name: excalidraw
+    ports:
+      - 8080:80
+    restart:
+      unless-stopped
+

@@ -1,0 +1,17 @@
+version: '3.3'
+services:
+  serv1:
+    image: hyper/docker-registry-web
+#    image: repo.local.com/jellyfin:10.8.10
+    volumes:
+      - /home/data/docker-registry-web/config.yml:/conf/config.yml:ro
+    container_name: docker-registry-web
+    environment:
+      REGISTRY_URL: http://repo.local.com/v2
+      REGISTRY_NAME: repo.local.com
+#    privileged: true
+    ports:
+      - 9015:8080
+    restart:
+      unless-stopped
+

@@ -1,0 +1,19 @@
+version: '3.3'
+services:
+  serv1:
+    image: sanwenjing/vtiger:7.1.0
+    container_name: vtiger
+    volumes:
+      - /home/data/vtiger:/var/lib/vtiger
+    environment:
+      VT_SITE_URL: http://192.168.31.150:8198  #必须和真实访问地址一致
+      MYSQL_HOST: app.local.com
+      MYSQL_ROOT_PASSWORD: 123456
+      MYSQL_DATABASE: vtiger
+#    privileged: true
+    ports:
+      - 8198:80
+      - 8199:443
+    restart:
+      unless-stopped
+

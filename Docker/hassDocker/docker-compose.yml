@@ -1,0 +1,13 @@
+version: '3.3'
+services:
+  serv1:
+#    image: sanwenjing/home-assistant
+    image: repo.local.com/home-assistant:2023.11.1
+    container_name: hass
+    volumes:
+      - /home/data/hass/config:/config
+    ports:
+      - 8123:8123
+    restart:
+      unless-stopped
+

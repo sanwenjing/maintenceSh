@@ -1,0 +1,18 @@
+version: '3.3'
+services:
+  serv1:
+#    image: frangoteam/fuxa:latest
+    image: repo.local.com/fuxa:1.1.15
+    container_name: fuxa
+    volumes:
+      - /home/data/fuxa/fuxa_appdata:/usr/src/app/FUXA/server/_appdata
+      - /home/data/fuxa/fuxa_db:/usr/src/app/FUXA/server/_db
+      - /home/data/fuxa/fuxa_logs:/usr/src/app/FUXA/server/_logs
+      - /home/data/fuxa/fuxa_shapes:/usr/src/app/FUXA/client/assets/lib/svgeditor/shapes
+      - /home/data/fuxa/fuxa_images:/usr/src/app/FUXA/server/_images
+#    privileged: true
+    ports:
+      - 1881:1881
+    restart:
+      unless-stopped
+

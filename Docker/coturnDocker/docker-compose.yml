@@ -1,0 +1,16 @@
+version: '3.3'
+services:
+  serv1:
+#    image: repo.local.com/coturn:20240406
+    image: coturn/coturn
+    container_name: coturn
+    environment:
+      TURN_USERNAME: test
+      TURN_PASSWORD: 123456
+#    privileged: true
+    ports:
+      - 3748:3748
+      - 5349:5349/udp
+    restart:
+      unless-stopped
+

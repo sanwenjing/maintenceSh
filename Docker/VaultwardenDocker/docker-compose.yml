@@ -1,0 +1,20 @@
+version: '3.3'
+services:
+  serv1:
+#    image: vaultwarden/server:latest
+    image: repo.local.com/vaultwarden:2024.1.2
+    container_name: vaultwarden
+    volumes:
+      - /home/data/bitwarden/:/data/
+    environment:
+      WEBSOCKET_ENABLED: "true"
+      SIGNUPS_ALLOWED: "true"
+      DOMAIN: "https://vault.local.com"
+      ADMIN_TOKEN: "eMEt*W4ay7"
+      DATABASE_URL: "mysql://dbuser:123456@dbserv:3306/db_vault"
+    ports:
+      - 1234:80
+      - 3012:3012
+    restart:
+      unless-stopped
+

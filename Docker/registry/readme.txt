@@ -21,6 +21,12 @@ vim /usr/lib/systemd/system/docker.service
 在--insecure-registry 127.0.0.1:5000处复制添加一行如下内容即可解决
 
 --insecure-registry 192.168.92.134:5000
+#新版本
+vi /etc/docker/daemon.json
+添加
+{
+  "insecure-registries": ["<your-server-ip>:5000"]
+}
 3.查看仓库
 http://192.168.92.134:5000/v2/_catalog
 

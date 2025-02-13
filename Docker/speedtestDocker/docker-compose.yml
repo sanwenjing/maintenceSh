@@ -1,0 +1,13 @@
+version: '3.3'
+services:
+  serv1:
+#    image: docker.1ms.run/adolfintel/speedtest
+    image: repo.local.com/speedtest:20250213
+    container_name: speedtest
+    volumes:
+      - /home/data/Speedtest:/Speedtest
+    ports:
+      - 1234:80
+    restart:
+      unless-stopped
+

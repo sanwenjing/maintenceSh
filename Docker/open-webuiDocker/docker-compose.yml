@@ -1,0 +1,18 @@
+version: '3.3'
+services:
+  serv1:
+#    image: nyanmisaka/jellyfin:latest
+    image: ghcr.io/open-webui/open-webui
+    container_name: open-webui
+    environment:
+      OLLAMA_BASE_URL: http://vm2.local.com:11434
+    volumes:
+      - /home/data/open-webui:/app/backend/data
+    extra_hosts:
+      "vm2.local.com": "192.168.31.47"
+      "host.docker.internal": "host-gateway"
+    ports:
+      - 3000:8080
+    restart:
+      unless-stopped
+

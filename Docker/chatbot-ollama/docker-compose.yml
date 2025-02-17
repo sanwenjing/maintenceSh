@@ -1,0 +1,14 @@
+version: '3.3'
+services:
+  serv1:
+#    image: nyanmisaka/jellyfin:latest
+    image: ghcr.io/ivanfioravanti/chatbot-ollama:main
+    container_name: chatbot-ollama
+    environment:
+      OLLAMA_HOST: http://vm2.local.com:11434
+      DEFAULT_MODEL: Deepseek-r1:8b
+    ports:
+      - 3000:3000
+    restart:
+      unless-stopped
+

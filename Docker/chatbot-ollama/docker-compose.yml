@@ -1,8 +1,8 @@
 version: '3.3'
 services:
   serv1:
-#    image: nyanmisaka/jellyfin:latest
-    image: ghcr.io/ivanfioravanti/chatbot-ollama:main
+    image: repo.local.com/chatbot-ollama:20250217
+#    image: ghcr.io/ivanfioravanti/chatbot-ollama:main
     container_name: chatbot-ollama
     environment:
       OLLAMA_HOST: http://vm2.local.com:11434

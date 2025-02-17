@@ -1,8 +1,8 @@
 version: '3.3'
 services:
   serv1:
-#    image: nyanmisaka/jellyfin:latest
-    image: ghcr.io/open-webui/open-webui
+#    image: repo.local.com/open-webui:0.5.12
+#    image: ghcr.io/open-webui/open-webui
     container_name: open-webui
     environment:
       OLLAMA_BASE_URL: http://vm2.local.com:11434

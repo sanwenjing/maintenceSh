@@ -1,8 +1,8 @@
 version: '3.3'
 services:
   serv1:
-    image: hyper/docker-registry-web
-#    image: repo.local.com/jellyfin:10.8.10
+#    image: hyper/docker-registry-web
+    image: repo.local.com/docker-registry-web
     volumes:
       - /home/data/docker-registry-web/config.yml:/conf/config.yml:ro
     container_name: docker-registry-web

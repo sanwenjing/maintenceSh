@@ -1,0 +1,18 @@
+version: '3.3'
+services:
+  serv1:
+    image: docker.1ms.run/lobehub/lobe-chat
+#    image: repo.local.com/jellyfin:10.8.10
+    container_name: lobechat
+#    volumes:
+#      - /home/data/jellyfin/config:/config
+    environment:
+      OLLAMA_PROXY_URL: http://host.docker.internal:11434
+    devices:
+#直通显卡给 Docker 容器，用于硬解
+      - /dev/dri:/dev/dri
+    ports:
+      - 3000:3210
+    restart:
+      unless-stopped
+

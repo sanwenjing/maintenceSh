@@ -1,8 +1,8 @@
 version: '3.3'
 services:
   serv1:
-    image: docker.1ms.run/lobehub/lobe-chat
-#    image: repo.local.com/jellyfin:10.8.10
+#    image: docker.1ms.run/lobehub/lobe-chat
+    image: repo.local.com/lobe-chat:20250219
     container_name: lobechat
 #    volumes:
 #      - /home/data/jellyfin/config:/config

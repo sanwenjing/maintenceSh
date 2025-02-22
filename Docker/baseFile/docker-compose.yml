@@ -1,4 +1,10 @@
 version: '3.3'
+
+#networks:
+#  blinko-network:
+#    driver: bridge
+
+
 services:
   serv1:
 #    image: nyanmisaka/jellyfin:latest

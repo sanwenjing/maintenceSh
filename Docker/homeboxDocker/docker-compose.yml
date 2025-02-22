@@ -1,0 +1,21 @@
+version: '3.3'
+services:
+  serv1:
+#    image: docker.1ms.run/xgheaven/homebox
+    image: repo.local.com/homebox
+    container_name: homebox
+#    volumes:
+#      - /home/data/jellyfin/config:/config
+#    environment:
+#      TZ: Asia/Shanghai
+#    privileged: true
+#    devices:
+#直通显卡给 Docker 容器，用于硬解
+#      - /dev/dri:/dev/dri
+#    extra_hosts:
+#      "api.themoviedb.org": "13.224.161.90"
+    ports:
+      - 8097:3300
+    restart:
+      unless-stopped
+

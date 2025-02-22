@@ -1,0 +1,67 @@
+version: '3.3'
+
+
+#blinko是一款多用户的在线笔记应用,界面非常漂亮
+networks:
+  blinko-network:
+    driver: bridge
+
+services:
+  blinko-website:
+#    image: docker.1ms.run/blinkospace/blinko:latest
+    image: repo.local.com/blinko:0.40.5
+    container_name: blinko-website
+    environment:
+      NODE_ENV: production
+      # NEXTAUTH_URL: http://localhost:1111
+      # IMPORTANT: If you want to use sso, you must set NEXTAUTH_URL to your own domain
+      # NEXT_PUBLIC_BASE_URL: http://localhost:1111
+      # IMPORTANT: Replace this with your own secure secret key!
+      NEXTAUTH_SECRET: my_ultra_secure_nextauth_secret
+      DATABASE_URL: postgresql://postgres:blinkopasswd@postgres:5432/postgres
+    depends_on:
+      postgres:
+        condition: service_healthy
+    # Make sure you have enough permissions.
+    volumes:
+      - /home/data/blinko:/app/.blinko 
+    restart: always
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "3"
+    ports:
+      - 1111:1111
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://blinko-website:1111/"]
+      interval: 30s 
+      timeout: 10s   
+      retries: 5     
+      start_period: 30s 
+    networks:
+      - blinko-network
+
+  postgres:
+#    image: docker.1ms.run/postgres:14
+    image: repo.local.com/postgres:14
+    container_name: blinko-postgres
+    restart: always
+    ports:
+      - 5435:5432
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: blinkopasswd
+      TZ: Asia/Shanghai
+    # Persisting container data
+    # Make sure you have enough permissions.
+    volumes:
+      - /home/data/blinko/dbdata:/var/lib/postgresql/data
+    healthcheck:
+      test:
+        ["CMD", "pg_isready", "-U", "postgres", "-d", "blinkopasswd"]
+      interval: 5s
+      timeout: 10s
+      retries: 5
+    networks:
+      - blinko-network

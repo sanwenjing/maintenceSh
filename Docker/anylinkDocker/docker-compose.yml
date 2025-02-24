@@ -7,8 +7,8 @@ version: '3.3'
 
 services:
   serv1:
-    image: bjdgyc/anylink
-#    image: repo.local.com/jellyfin:10.8.10
+#    image: bjdgyc/anylink
+    image: repo.local.com/anylink
     container_name: anylink
     volumes:
       - /home/data/anylink/conf:/app/conf

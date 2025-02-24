@@ -1,4 +1,4 @@
-image=bjdgyc/anylink
+image=repo.local.com/anylink
 confdir=/home/data/anylink/
 echo 'Input your password for admin E.g 123@qwe'
 read key

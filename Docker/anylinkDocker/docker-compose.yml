@@ -1,0 +1,29 @@
+version: '3.3'
+
+#networks:
+#  blinko-network:
+#    driver: bridge
+
+
+services:
+  serv1:
+    image: bjdgyc/anylink
+#    image: repo.local.com/jellyfin:10.8.10
+    container_name: anylink
+    volumes:
+      - /home/data/anylink/conf:/app/conf
+#    environment:
+#      TZ: Asia/Shanghai
+    privileged: true
+#    devices:
+#直通显卡给 Docker 容器，用于硬解
+#      - /dev/dri:/dev/dri
+#    extra_hosts:
+#      "api.themoviedb.org": "13.224.161.90"
+    ports:
+      - 55555:443
+      - 8800:8800
+#    command: ['bash','-c','/app/conf/server.toml']
+    restart:
+      unless-stopped
+

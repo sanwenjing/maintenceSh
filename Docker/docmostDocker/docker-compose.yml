@@ -12,6 +12,13 @@ services:
       APP_SECRET: 'G6phrmJxWvAVU2JRStChasfaQSRrmJxwwe'  # 设置应用的密钥至少32位
       DATABASE_URL: 'postgresql://docmost:docmost123@db:5432/docmost?schema=public'  # 配置 PostgreSQL 数据库连接 URL
       REDIS_URL: 'redis://redis:6379'  # 配置 Redis 连接 URL
+#      MAIL_DRIVER: 'smtp'
+#      SMTP_HOST: 'smtp.88.com'
+#      SMTP_PORT: '465'
+#      SMTP_USERNAME: 'wbsu2003@88.com'
+#      SMTP_PASSWORD: '<第三方邮件客户端密码>'
+#      MAIL_FROM_ADDRESS: 'wbsu2003@88.com'
+#      MAIL_FROM_NAME: 'Docmost'
     ports:
       - "3040:3000"  # 将容器内的 3000 端口映射到主机的 3040 端口
     restart: always  # 容器崩溃后总是重启

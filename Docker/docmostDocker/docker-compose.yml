@@ -1,0 +1,42 @@
+version: '3.3'
+services:
+  docmost:
+#    image: docmost/docmost:latest  # 使用最新版本的 docmost 镜像
+    image: repo.local.com/docmost:0.8.3  # 使用最新版本的 docmost 镜像
+    container_name: docmost  # 设置容器的名称为 docmost-app
+    depends_on:
+      - db  # 依赖数据库服务
+      - redis  # 依赖 Redis 服务
+    environment:
+      APP_URL: 'http://192.168.31.150:3040'  # 设置应用的 URL 本机IP
+      APP_SECRET: 'G6phrmJxWvAVU2JRStChasfaQSRrmJxwwe'  # 设置应用的密钥至少32位
+      DATABASE_URL: 'postgresql://docmost:docmost123@db:5432/docmost?schema=public'  # 配置 PostgreSQL 数据库连接 URL
+      REDIS_URL: 'redis://redis:6379'  # 配置 Redis 连接 URL
+    ports:
+      - "3040:3000"  # 将容器内的 3000 端口映射到主机的 3040 端口
+    restart: always  # 容器崩溃后总是重启
+    volumes:
+      - /home/data/docmost/data:/app/data/storage  # 将主机的 ./data 目录挂载到容器的 /app/data/storage 目录
+
+  db:
+#    image: postgres:16-alpine  # 使用 PostgreSQL 16 版本的 Alpine 镜像
+    image: repo.local.com/postgres:16-alpine  # 使用 PostgreSQL 16 版本的 Alpine 镜像
+    container_name: docmost-db  # 设置容器的名称为 docmost-db
+    environment:
+      POSTGRES_DB: docmost  # 设置数据库名称为 docmost
+      POSTGRES_USER: docmost  # 设置数据库用户为 docmost
+      POSTGRES_PASSWORD: docmost123  # 设置数据库密码
+    restart: always  # 容器崩溃后总是重启
+    volumes:
+      - /home/data/docmost/db:/var/lib/postgresql/data  # 将主机的 ./db 目录挂载到容器的 /var/lib/postgresql/data 目录，保存数据库数据
+#    ports:
+#      - 5432:5432
+
+  redis:
+#    image: redis:7.2-alpine  # 使用 Redis 7.2 版本的 Alpine 镜像
+    image: repo.local.com/redis:7.2-alpine  # 使用 Redis 7.2 版本的 Alpine 镜像
+    container_name: docmost-redis  # 设置容器的名称为 docmost-redis
+    restart: always  # 容器崩溃后总是重启
+    volumes:
+      - /home/data/docmost/redis:/data  # 将主机的 ./redis 目录挂载到容器的 /data 目录，保存 Redis 数据
+

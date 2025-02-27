@@ -20,6 +20,8 @@ services:
 #      - /dev/dri:/dev/dri
 #    extra_hosts:
 #      "api.themoviedb.org": "13.224.161.90"
+#    network_mode: host
+#    command: ['bash','-c','/app/conf/server.toml']
     ports:
       - 8096:8096
     restart:

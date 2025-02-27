@@ -1,0 +1,17 @@
+version: '2.4'
+services:
+  anythingllm:
+    image: mintplexlabs/anythingllm:latest
+    container_name: anythingllm
+    restart: unless-stopped
+    ports:
+      - "3001:3001"
+    user: "1000:1000"
+    mem_limit: 1536M
+    memswap_limit: 9728M
+    mem_reservation: 1024M
+    cpus: 1.5
+    volumes:
+      - "/home/data/anythingLLM/storage:/app/server/storage"
+      - "/home/data/anythingLLM/.env:/app/server/.env"
+

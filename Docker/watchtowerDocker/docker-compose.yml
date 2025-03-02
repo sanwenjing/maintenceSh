@@ -1,0 +1,35 @@
+version: '3.3'
+
+#networks:
+#  blinko-network:
+#    driver: bridge
+
+
+services:
+  serv1:
+#    image: containrrr/watchtower
+    image: repo.local.com/watchtower
+    container_name: watchtower
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+       - WATCHTOWER_INTERNAL=3600  #更新间隔
+       - WATCHTOWER_CLEANUP=true  #清理未使用镜像
+       - WATCHTOWER_MONITOR_ONLY="alist,alist"   #仅更新特定的镜像
+       - WATCHTOWER_LABEL_ENABLE= true #启用容器标签过滤，仅更新具有特定标签的容器。
+       - WATCHTOWER_LABEL_FILTER= "alist" #通过标签来筛选需要更新的容器，避免更新不必要的容器。
+#      - WATCHTOWER_NOTIFICATION= #启用通知功能，支持通过 Slack、邮件等方式发送通知。
+#      - WATCHTOWER_NO_RESTART=true #如果设置为 true，更新镜像后不会自动重启容器，需要手动操作。
+#    privileged: true
+#    devices:
+#直通显卡给 Docker 容器，用于硬解
+#      - /dev/dri:/dev/dri
+#    extra_hosts:
+#      "api.themoviedb.org": "13.224.161.90"
+#    network_mode: host
+#    command: ['bash','-c','/app/conf/server.toml']
+#    ports:
+#      - 8096:8096
+    restart:
+      unless-stopped
+

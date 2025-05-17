@@ -1,0 +1,107 @@
+version: '3.3'
+
+#networks:
+#  blinko-network:
+#    driver: bridge
+
+version: '3'
+services:
+  cgm-remote-monitor:
+#    image: "diyaps/nightscout:latest"
+    image: "repo.local.com/nightscout:15.0.2"
+    container_name: nightscout
+    environment:
+      ## settings according to
+      ## https://github.com/nightscout/cgm-remote-monitor/blob/master/README.md#environment
+
+      # MongoDB connection within the stack
+      MONGO_CONNECTION: "mongodb://mongo:27017/Nightscout"
+      # admin secret
+      API_SECRET: "sanwenjingsanwenjing"
+      # the URL to this Nightscout instance
+      BASE_URL: "https://192.168.31.150"
+      # using a reverse proxy with SSL offloading
+      INSECURE_USE_HTTP: "true"
+      # deny access by default
+      AUTH_DEFAULT_ROLES: "denied"
+      # Remove the next lines in case you don't need remote override.
+      # The content of your Apple p8 key file.
+      #LOOP_APNS_KEY: ""
+      #LOOP_APNS_KEY_ID: ""
+      # The team ID of your apple developer account.
+      #LOOP_DEVELOPER_TEAM_ID: ""
+      # LOOP_PUSH_SERVER_ENVIRONMENT: "production"
+
+      # device info fields to show
+      PUMP_FIELDS: "reservoir battery status clock"
+      PUMP_RETRO_FIELDS: "reservoir battery status clock"
+      # required for other plugins (i.e. upbat)
+      DEVICESTATUS_ADVANCED: "true"
+      # enable plugins
+      ENABLE: "bridge loop iob cob basal sage cage bage override dbsize careportal delta direction upbat timeago pump bwg rawbg devicestatus openaps"
+      # tune BG target and alarm ranges (since nightscout 13.0.0 in *display* units)
+      BG_HIGH: 10
+      BG_TARGET_TOP: 8
+      BG_TARGET_BOTTOM: 5
+      BG_LOW: 3.9
+
+      # website title by default
+      CUSTOM_TITLE: "Lex Docker"
+      # use SI units by default
+      DISPLAY_UNITS: "mmol/L"
+      # use 24h time format by default
+      TIME_FORMAT: 24
+
+      # switch to "colors" theme by default
+      THEME: "colors"
+      # switch to Simplified Chinese by default
+      LANGUAGE: "zh_cn"
+      # show basal rate by default
+      BASAL_RENDER: "default"
+      # show plugins by default
+      SHOW_PLUGINS: "pump openaps loop cob iob sage cage careportal basal override dbsize"
+      # do not allow treatment editing
+      EDIT_MODE: "off"
+      # disable any alarms by default (if using Nightscout as time series visualization)
+      ALARM_URGENT_HIGH: "off"
+      ALARM_HIGH: "off"
+      ALARM_URGENT_LOW: "off"
+      ALARM_LOW: "off"
+      ALARM_TIMEAGO_WARN: "off"
+      ALARM_TIMEAGO_URGENT: "off"
+      SHOW_FORECAST: "loop"
+      PUMP_ENABLE_ALERTS: "true"
+      # This is the pump battery percentage that will trigger a red, urgent alert in NS.
+      PUMP_URGENT_BATT_U: 30
+      # This is the pump battery voltage that will trigger a red, urgent alert in NS.
+      PUMP_URGENT_BATT_V: 1.25
+      # This is the reservoir volume that will trigger a red, urgent alert in NS.
+      PUMP_URGENT_RES: 10
+      PUMP_URGENT_CLOCK: 30
+      LOOP_ENABLE_ALERTS: "true"
+      # This is the minutes since Loop last successfully looped, the t1d will have a similar notification at this time through the Loop app. This will be a yellow alert in NS.
+      LOOP_WARN: 20
+      # Same as the alert above, but will be red in color and have a shorter snooze option.
+      LOOP_URGENT: 60
+
+      
+    ports:
+      - 1337:1337
+    depends_on:
+      - mongo 
+    restart:
+      unless-stopped
+
+  mongo:
+    # For AX9000, can only use mongodb under version 4.x
+#    image: mongo:4.4.17-rc0-focal
+    image: repo.local.com/mongo:4.4.17-rc0-focal
+    container_name: mongodb_ns
+    volumes:
+    #For AX9000, please use "/mnt/docker_disk/mi_docker/mongodb:/data/db"
+      - /home/data/ns_mongodb:/data/db
+    ports:
+      - 27017:27017
+    restart:
+      unless-stopped
+

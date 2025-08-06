@@ -1,0 +1,21 @@
+version: '3.3'
+services:
+  serv1:
+#    image: ghcr.io/sysadminsmedia/homebox
+    image: repo.local.com/homebox2:0.20.2
+    container_name: homebox2
+    volumes:
+      - /home/data/homebox2/data:/data
+    environment:
+      TZ: Asia/Shanghai
+#    privileged: true
+#    devices:
+#直通显卡给 Docker 容器，用于硬解
+#      - /dev/dri:/dev/dri
+#    extra_hosts:
+#      "api.themoviedb.org": "13.224.161.90"
+    ports:
+      - 3100:7745
+    restart:
+      unless-stopped
+

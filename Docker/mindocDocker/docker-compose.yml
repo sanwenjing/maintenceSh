@@ -1,16 +1,37 @@
 version: '3.3'
+
+#networks:
+#  blinko-network:
+#    driver: bridge
+
 services:
-  mindoc:
-    container_name: mindoc
-    image: registry.cn-hangzhou.aliyuncs.com/mindoc-org/mindoc:v2.1
-    restart: always
-    environment:
-      - MINDOC_ENABLE_EXPORT=true
+  mindoc:  # 服务名称，可以自定义
+#    image:   ywsj/mindoc:latest     # 使用ywsj/mindoc的镜像，来自docker-hub镜像仓库
+    image:   repo.local.com/mindoc:20250912
+    container_name: mindoc  # 容器名称
+    privileged: false  # 是否启用特权模式，这里禁用
+    restart: unless-stopped  # 容器退出后总是自动重启
     ports:
-      - "8181:8181"
+      - 8181:8181  # 端口映射：宿主机8181端口 -> 容器8181端口
     volumes:
-      - /home/data/mindoc:/mindoc/conf
+      - /home/data/mindoc/conf://mindoc/conf       # 配置文件挂载
+      - /home/data/mindoc/static://mindoc/static   # 静态资源挂载
+      - /home/data/mindoc/views://mindoc/views     # 页面模板挂载
+      - /home/data/mindoc/uploads://mindoc/uploads # 上传文件挂载
+      - /home/data/mindoc/runtime://mindoc/runtime # 运行时文件挂载（日志、缓存等）
+      - /home/data/mindoc/database://mindoc/database # 数据库存储挂载
+    environment:
+      - MINDOC_RUN_MODE=prod  # 运行模式：生产环境(prod) / 开发环境(dev)
+      - MINDOC_DB_ADAPTER=sqlite3  # 数据库类型，这里使用 sqlite3
+      - MINDOC_DB_DATABASE=./database/mindoc.db  # 数据库文件路径
+      - MINDOC_CACHE=true  # 是否开启缓存
+      - MINDOC_CACHE_PROVIDER=file  # 缓存提供方式：文件缓存
+      - MINDOC_ENABLE_EXPORT=true  # 是否启用导出功能（true/false）
+      - MINDOC_BASE_URL=  # 网站基础 URL（可以留空，或配置域名）
+      - MINDOC_CDN_IMG_URL=  # 图片 CDN 地址
+      - MINDOC_CDN_CSS_URL=  # CSS CDN 地址
+      - MINDOC_CDN_JS_URL=   # JS CDN 地址
+    dns:
+      - 223.5.5.5  # 阿里公共 DNS
+      - 223.6.6.6  # 阿里公共 DNS
 
-
-
-#login with admin/123456

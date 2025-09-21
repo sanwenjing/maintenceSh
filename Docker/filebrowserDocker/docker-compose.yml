@@ -1,0 +1,33 @@
+version: '3.3'
+
+#networks:
+#  blinko-network:
+#    driver: bridge
+
+
+services:
+  serv1:
+#    image: filebrowser/filebrowser
+    image: repo.local.com/filebrowser:2.43.0
+    container_name: filebrowser
+    user: 0:0
+    volumes:
+      - /home/data/filebrowser_data:/srv       # 挂载数据目录，FileBrowser 的根目录，对应宿主机 ./filebrowser_data
+      - /home/data/filebrowser_database:/database  # 挂载数据库目录，存放用户账号、配置等信息
+      - /home/data/filebrowser_config:/config  # 挂载配置目录，存放 settings.json 等配置文件
+#      - /home/data/jellyfin/config:/config
+#    environment:
+#      TZ: Asia/Shanghai
+#    privileged: true
+#    devices:
+#直通显卡给 Docker 容器，用于硬解
+#      - /dev/dri:/dev/dri
+#    extra_hosts:
+#      "api.themoviedb.org": "13.224.161.90"
+#    network_mode: host
+#    command: ['bash','-c','/app/conf/server.toml']
+    ports:
+      - 8680:80
+    restart:
+      unless-stopped
+

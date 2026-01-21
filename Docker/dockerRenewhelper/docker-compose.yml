@@ -1,0 +1,32 @@
+version: '3.3'
+
+#networks:
+#  blinko-network:
+#    driver: bridge
+
+
+services:
+  serv1:
+#    image: ieax/renewhelper
+    image: repo.local.com/renewhelper:V2.0.20
+    container_name: renewhelper
+    volumes:
+      - /home/data/renewhelper/data:/data                      # 数据持久化：将宿主机的 ./data 目录挂载进去，防止容器重启后数据丢失
+    environment:
+      - AUTH_PASSWORD=123456abc           # 登录密码：设置容器内部的登录密码，必填项
+      - CRON_SCHEDULE=0,30 * * * *        # Cron 调度：设置容器定时任务的执行时间，语法为 "分钟 小时 日 月 星期"，例如："0,30 * * * *" 表示每小时的第0分和第30分执行任务
+      - TZ=Asia/Shanghai                  # 时区设置：定义容器的时区，建议设置为你所在的地区，便于定时任务的正确执行
+#      TZ: Asia/Shanghai
+#    privileged: true
+#    devices:
+#直通显卡给 Docker 容器，用于硬解
+#      - /dev/dri:/dev/dri
+#    extra_hosts:
+#      "api.themoviedb.org": "13.224.161.90"
+#    network_mode: host
+#    command: ['bash','-c','/app/conf/server.toml']
+    ports:
+      - 9787:9787
+    restart:
+      unless-stopped
+

@@ -1,0 +1,33 @@
+version: '3.3'
+
+#networks:
+#  blinko-network:
+#    driver: bridge
+
+
+services:
+  serv1:
+#    image: docker.1ms.run/n8nio/n8n
+    image: repo.local.com/n8n:2.4.6
+    container_name: n8n
+    volumes:
+      - n8n_data:/home/node/.n8n
+      - /home/data/n8n/dist:/usr/local/lib/node_modules/n8n/node_modules/n8n-editor-ui/dist
+    environment:
+#      TZ: Asia/Shanghai
+      - N8N_SECURE_COOKIE=false
+      - N8N_DEFAULT_LOCALE=zh-CN
+#    privileged: true
+#    devices:
+#直通显卡给 Docker 容器，用于硬解
+#      - /dev/dri:/dev/dri
+#    extra_hosts:
+#      "api.themoviedb.org": "13.224.161.90"
+#    network_mode: host
+#    command: ['bash','-c','/app/conf/server.toml']
+    ports:
+      - 5678:5678
+    restart:
+      unless-stopped
+volumes:
+  n8n_data:                                 # 定义名为 n8n_data 的数据卷

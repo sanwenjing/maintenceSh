@@ -1,0 +1,57 @@
+services:
+
+  redis-voapi:
+    image: repo.local.com/redis:8.4.0
+    container_name: redis-voapi
+    restart: always
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 3s
+      retries: 3
+      start_period: 10s
+        
+  db-voapi:
+    image: repo.local.com/mysql:8.0.43
+    restart: always
+    container_name: db-voapi
+    ports:
+      - '3307:3306'
+    volumes:
+      - /home/data/voapi/data:/var/lib/mysql  # 挂载目录，持久化存储
+      - /home/data/voapi/init-db.sql:/docker-entrypoint-initdb.d/init-db.sql  # 初始化数据库脚本
+    environment:
+      TZ: Asia/Shanghai   # 设置时区
+      MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'  # 允许空密码
+      MYSQL_USER: voapi   # 创建专用用户
+      MYSQL_PASSWORD: voapi123    # 设置专用用户密码
+      MYSQL_DATABASE: voapi   # 自动创建数据库
+    command: --max_connections=5000 --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+      start_period: 30s
+
+  voapi-app:
+#    image: voapi/voapi:latest   
+#    image: hub.rat.dev/voapi/voapi   
+    image: repo.local.com/voapi:v1.2.0   
+    restart: always  
+    container_name: voapi-app
+    depends_on:
+      db-voapi:
+        condition: service_healthy
+      redis-voapi:
+        condition: service_healthy
+    volumes:
+      - /home/data/voapi/config.yml:/config.yml    
+      - /home/data/voapi/file:/file       
+      - /home/data/voapi/public:/public       
+    ports:
+      - "6800:6800"
+
+networks:
+  network:
+    external: true 

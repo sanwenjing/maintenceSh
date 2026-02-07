@@ -5,6 +5,9 @@ services:
     container_name: ssh-alpine
 #    volumes:
 #      - /home/data/jizhang:/html
+    environment:
+      ROOT_PASSWORD: admin   #如不配置默认为admin
+
 #    privileged: true
     ports:
       - 2222:22

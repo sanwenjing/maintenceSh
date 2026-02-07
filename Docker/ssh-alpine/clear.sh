@@ -27,6 +27,7 @@ if [ $key = 'y' ]; then
 
 docker run --restart=always -d \
     --name $target \
+    -e ROOT_PASSWORD=admin123 \
     -p 2222:22 \
     -v /html:/html \
 $images

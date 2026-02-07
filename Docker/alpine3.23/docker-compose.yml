@@ -1,0 +1,13 @@
+version: '3.3'
+services:
+  serv1:
+    image: repo.local.com/web:1.1
+    container_name: jizhang
+    volumes:
+      - /home/data/jizhang:/html
+#    privileged: true
+    ports:
+      - 82:80
+    restart:
+      unless-stopped
+

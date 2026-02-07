@@ -1,0 +1,13 @@
+version: '3.3'
+services:
+  serv1:
+    image: repo.local.com/ssh-alpine:1.0
+    container_name: ssh-alpine
+#    volumes:
+#      - /home/data/jizhang:/html
+#    privileged: true
+    ports:
+      - 2222:22
+    restart:
+      unless-stopped
+

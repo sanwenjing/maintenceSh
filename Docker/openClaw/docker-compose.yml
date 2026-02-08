@@ -1,0 +1,17 @@
+version: '3.3'
+services:
+  serv1:
+    image: repo.local.com/openclaw-alpine:2026.2.6-3
+#    image: repo.local.com/ssh-alpine:1.0
+    container_name: openclaw-alpine
+#    volumes:
+#      - /home/data/jizhang:/html
+    environment:
+      ROOT_PASSWORD: admin   #如不配置默认为admin
+
+#    privileged: true
+    ports:
+      - 2226:22
+    restart:
+      unless-stopped
+

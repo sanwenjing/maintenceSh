@@ -9,8 +9,7 @@ RUN sed -i "s/https:\/\/dl-cdn.alpinelinux.org/http:\/\/repo.local.com:8080/g" /
 
 RUN apk update && \
 apk add --no-cache openssh \
-tzdata  && cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && \
-echo "Asia/Shanghai"> /etc/timezone
+tzdata  && ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime 
 
 RUN ssh-keygen -A && \
 echo "root:admin" | chpasswd && \

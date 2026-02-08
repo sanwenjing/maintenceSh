@@ -1,6 +1,6 @@
 #!/bin/sh
-target=ssh-alpine
-ver=1.0
+target=base-alpine
+ver=1.1
 images=repo.local.com/$target:$ver
 
 echo "clear $target and delete $images(y/n)"
@@ -27,7 +27,7 @@ if [ $key = 'y' ]; then
 
 docker run --restart=always -d \
     --name $target \
-    -p 2222:22 \
+    -p 2225:22 \
     -v /html:/html \
 $images
 docker logs $target

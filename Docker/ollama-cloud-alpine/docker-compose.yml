@@ -1,0 +1,18 @@
+version: '3.3'
+services:
+  serv1:
+#    image: repo.local.com/ssh-alpine:1.0
+    image: repo.local.com/ollama-cloud-alpine:0.13.0-r0
+    container_name: oc
+#    volumes:
+#      - /home/data/jizhang:/html
+    environment:
+      ROOT_PASSWORD: admin   #如不配置默认为admin
+
+#    privileged: true
+    ports:
+      - 2227:22
+      - 11434:11434
+    restart:
+      unless-stopped
+

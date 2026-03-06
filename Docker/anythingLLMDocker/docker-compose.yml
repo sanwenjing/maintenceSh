@@ -1,8 +1,8 @@
-version: '2.4'
+version: '3.8'
 services:
   anythingllm:
-#    image: mintplexlabs/anythingllm:latest
-    image: repo.local.com/anythingllm:latest
+    image: docker.1ms.run/mintplexlabs/anythingllm
+#    image: repo.local.com/anythingllm:1.11.1
     container_name: anythingllm
     restart: unless-stopped
     ports:
@@ -12,7 +12,10 @@ services:
     memswap_limit: 9728M
     mem_reservation: 1024M
     cpus: 1.5
+    environment:
+      - SERVER_PORT=3001
+      - STORAGE_DIR=/app/server/storage
+      - JWT_SECRET=sanwenjing
     volumes:
-      - "/home/data/anythingLLM/storage:/app/server/storage"
-      - "/home/data/anythingLLM/.env:/app/server/.env"
+      - /home/data/anythingLLM/storage:/app/server/storage
 

@@ -1,0 +1,16 @@
+version: '3.3'
+services:
+  serv1:
+    image: repo.local.com/ssh-ubuntu:1.0
+    container_name: ssh-ubuntu
+#    volumes:
+#      - /home/data/jizhang:/html
+    environment:
+      ROOT_PASSWORD: admin   #如不配置默认为admin
+
+#    privileged: true
+    ports:
+      - 2222:22
+    restart:
+      unless-stopped
+

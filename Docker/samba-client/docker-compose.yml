@@ -4,7 +4,8 @@ services:
 #    build:
 #      context: .
 #      dockerfile: Dockerfile
-    image: repo.local.com/samba-client:latest
+#    image: repo.local.com/samba-client:7.4
+    image: registry.cn-hangzhou.aliyuncs.com/sanwenjing/samba-client:7.4
     container_name: samba-client
     environment:
       SMB_HOST: "192.168.31.2"

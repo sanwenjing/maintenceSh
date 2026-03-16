@@ -1,0 +1,17 @@
+version: '3.3'
+services:
+  samba-client:
+#    build:
+#      context: .
+#      dockerfile: Dockerfile
+    image: repo.local.com/samba-client:latest
+    container_name: samba-client
+    environment:
+      SMB_HOST: "192.168.31.2"
+      SMB_USERNAME: "admin"
+      SMB_PASSWORD: "123456"
+      SHARE_PATH: "disk2"
+    volumes:
+      - /mnt/smb-disk2:/mnt/samba:shared
+    restart: unless-stopped
+    privileged: true

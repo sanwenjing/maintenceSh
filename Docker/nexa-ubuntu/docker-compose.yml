@@ -1,0 +1,19 @@
+version: '3.3'
+services:
+  serv1:
+    image: repo.local.com/nexa-ubuntu:0.2.73
+    container_name: nexa-ubuntu
+    volumes:
+      - /root/.cache/nexa.ai/nexa_sdk/models:/root/.cache/nexa.ai/nexa_sdk/models:ro
+    environment:
+      ROOT_PASSWORD: admin   #如不配置默认为admin
+      NVIDIA_VISIBLE_DEVICES: all
+      NVIDIA_DRIVER_CAPABILITIES: all
+#    privileged: true
+    runtime: nvidia
+    ports:
+      - 2228:22
+      - 8000:18181
+    restart:
+      unless-stopped
+

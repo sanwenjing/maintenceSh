@@ -1,0 +1,19 @@
+version: '3.3'
+services:
+  serv1:
+    image: repo.local.com/comfyui:0.17.0
+    container_name: comfyui-ubuntu
+      #    volumes:
+      #      - /root/.cache/nexa.ai/nexa_sdk/models:/root/.cache/nexa.ai/nexa_sdk/models:ro
+    environment:
+      ROOT_PASSWORD: admin   #如不配置默认为admin
+      NVIDIA_VISIBLE_DEVICES: all
+      NVIDIA_DRIVER_CAPABILITIES: all
+#    privileged: true
+    runtime: nvidia
+    ports:
+      - 2229:22
+      - 8001:8000
+    restart:
+      unless-stopped
+

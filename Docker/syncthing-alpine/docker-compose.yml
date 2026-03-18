@@ -1,0 +1,22 @@
+version: '3.3'
+services:
+  syncthing:
+    image: registry.cn-hangzhou.aliyuncs.com/sanwenjing/syncthing:2.0.16-rc.2
+#    image: repo.local.com/syncthing:2.0.16-rc.2
+    container_name: syncthing
+    volumes:
+      - ./data:/home/syncthing/Sync
+      - ./config:/home/syncthing/.config/syncthing
+    environment:
+      ROOT_PASSWORD: admin
+    ports:
+      - 2232:22
+      - 8384:8384
+    restart:
+      unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8384"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 5s

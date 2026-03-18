@@ -1,0 +1,17 @@
+version: '3.3'
+services:
+  stdiscosrv:
+    image: registry.cn-hangzhou.aliyuncs.com/sanwenjing/stdiscosrv:2.0.16-rc.2
+#    image: repo.local.com/stdiscosrv:2.0.16-rc.2
+    container_name: stdiscosrv
+    ports:
+      - 22000:22000
+      - 21025:21025/udp
+    restart:
+      unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pidof stdiscosrv"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 5s

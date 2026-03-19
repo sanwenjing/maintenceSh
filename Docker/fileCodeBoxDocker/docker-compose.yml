@@ -1,8 +1,8 @@
 version: '3.3'
 services:
   serv1:
-#    image: lanol/filecodebox:beta
-    image: repo.local.com/filecodebox:2.0
+    image: registry.cn-hangzhou.aliyuncs.com/sanwenjing/filecodebox:2.3
+#    image: repo.local.com/filecodebox:2.3
     container_name: filecodebox
     volumes:
       - /home/data/filecodebox/:/app/data
@@ -12,4 +12,4 @@ services:
     restart:
       unless-stopped
 
-#visit via http://youip:12345/#/admin by password FileCodeBox2023
+#visit via http://youip:12345/

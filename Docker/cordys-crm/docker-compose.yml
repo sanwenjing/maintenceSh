@@ -1,0 +1,13 @@
+version: '3.9'
+services:
+    cordys-crm:
+        image: registry.cn-hangzhou.aliyuncs.com/sanwenjing/cordys-crm:1.5.2
+#        image: repo.local.com/cordys-crm:1.5.2
+        container_name: cordys-crm
+        volumes:
+            - '/home/data/cordys:/opt/cordys'
+        ports:
+            - '8082:8082'
+            - '8081:8081'
+        restart: unless-stopped
+

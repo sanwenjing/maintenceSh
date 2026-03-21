@@ -1,0 +1,24 @@
+version: '3.3'
+services:
+  photoprism:
+    image: repo.local.com/photoprism:260305 
+#    image: registry.cn-hangzhou.aliyuncs.com/sanwenjing/photoprism:260305
+    container_name: photoprism
+    ports:
+      - 2342:2342
+    volumes:
+      - /home/data/photoprism/originals:/photoprism/originals
+      - /home/data/photoprism/storage:/photoprism/storage
+      - /home/data/photoprism/import:/photoprism/import
+      - /home/data/photoprism/export:/photoprism/export
+    environment:
+      - PHOTOPRISM_ADMIN_PASSWORD=admin
+      - PHOTOPRISM_SITE_URL=http://localhost:2342/
+      - PHOTOPRISM_DATABASE_DRIVER=sqlite
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:2342/api/v1/config"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
